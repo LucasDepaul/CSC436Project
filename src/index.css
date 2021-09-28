@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+#maim{
+  justify-content: center;
+  align-self: center;
+  margin: 12vh;
+}

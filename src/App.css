@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+#maim{
+  justify-content: center;
+  align-self: center;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
