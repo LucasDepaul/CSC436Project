@@ -1,24 +1,23 @@
 import React, {useState} from 'react'
 
 
-export default function CreateTodo ({todos, setTodos}) {
+export default function CreateTodo ({todos, dispatch}) {
 
+    var today = new Date(), cur = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
     const start = Date.now()
     const [ name, setName] = useState('')
-    const [ dateCreated, setDateCreated] = useState('')
+    const [ dateCreated, setDateCreated] = useState(cur)
     const [ description, setDescription] = useState('')
     const [ complete, setComplete] = useState(false)
     const [ dateCompleted, setDateCompleted] = useState('Not Complete')
-
     function handleName (evt) {setName(evt.target.value)}
     function handleDescription (evt) {setDescription(evt.target.value)}
     function handleDateCreated (evt) {
         var today = new Date(), cur = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
         setDateCreated(cur)}
     function handleCreate () {
-        handleDateCreated()
-        const newTodo = {name, description, dateCreated, complete, dateCompleted}
-        setTodos([newTodo, ...todos])
+        //handleDateCreated()
+        dispatch({type: "CREATE_TODO", name, dateCreated, description, complete, dateCompleted});
     }
 
      return (

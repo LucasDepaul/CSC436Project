@@ -11,8 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-#maim{
+#main{
   justify-content: center;
   align-self: center;
-  margin: 12vh;
+  margin-bottom: 12vh;
+  align-content: center;
+}
+html{
+  background-color: powderblue;
 }

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 export default function Todo({name, description, dateCreated, completed, dateCompleted}) {
    const [complete, setComplete] = useState('') 
-   function handleComplete (evt) { setComplete(evt.target.checked)}
+   function handleComplete (evt) { setComplete(evt.target.checkbox)}
 
 	if (completed){
 		return (
