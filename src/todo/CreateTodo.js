@@ -3,18 +3,14 @@ import React, {useState} from 'react'
 
 export default function CreateTodo ({todos, dispatch}) {
 
-    var today = new Date(), cur = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
-    const start = Date.now()
+    var today = new Date(), cur = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate() + ' at ' + today.toLocaleTimeString();
     const [ name, setName] = useState('')
-    const [ dateCreated, setDateCreated] = useState(cur)
+    const [ dateCreated] = useState(cur)
     const [ description, setDescription] = useState('')
-    const [ complete, setComplete] = useState(false)
-    const [ dateCompleted, setDateCompleted] = useState('Not Complete')
+    const [ complete] = useState(false)
+    const [ dateCompleted] = useState('Not Complete')
     function handleName (evt) {setName(evt.target.value)}
     function handleDescription (evt) {setDescription(evt.target.value)}
-    function handleDateCreated (evt) {
-        var today = new Date(), cur = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
-        setDateCreated(cur)}
     function handleCreate () {
         //handleDateCreated()
         dispatch({type: "CREATE_TODO", name, dateCreated, description, complete, dateCompleted});
@@ -34,7 +30,7 @@ export default function CreateTodo ({todos, dispatch}) {
             </div>
 
             
-            <input type="submit" value="Submit"/>
+            <input type="submit" value="Submit" disabled={name.length === 0 || description.length ===0}/>
          </form>   
           )
  }

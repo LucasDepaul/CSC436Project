@@ -8,16 +8,16 @@ import appReducer from './reducer'
 function App() { 
       const initialTodos = [
             {
-              "name":"Do something",
-              "description":"some thing I need to do",
-              "dateCreated":"January 1st 1975",
-              "dateCompleted":"January 1st 2021",
+              "name":"Brush teeth",
+              "description":"I need to brush my teeth again",
+              "dateCreated":"1975-1-1 at 2:48:57 AM",
+              "dateCompleted":"2021-9-5 at 8:48:57 PM",
               "completed":true
             },
             {
-              "name":"Do something else",
-              "description":"some thing else I need to do",
-              "dateCreated":"March 3rd 2021",
+              "name":"Take Shower",
+              "description":"I should shower",
+              "dateCreated":"2021-3-5 at 4:55:01 PM",
               "dateCompleted":"Incomplete",
               "completed":false
             }
