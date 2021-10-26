@@ -1,13 +1,16 @@
 import TodoList from './TodoList'
 import CreateTodo from './CreateTodo'
+import {useContext} from 'react'
+import {StateContext} from '../Context'
 
-export default function TodoBar({user, todos, dispatch}) {
+export default function TodoBar() {
+	const{state}= useContext(StateContext)
         return (
             <>
-                <TodoList todos={todos} dispatch={dispatch}/>
+                <TodoList/>
                 <br/>
                 <br/>
-                {user && <CreateTodo todos={todos} dispatch={dispatch}/>}
+                {state.user && <CreateTodo/>}
             </>
         )
     } 

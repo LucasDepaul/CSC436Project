@@ -1,0 +1,83 @@
+{
+  "todos": [
+    {
+      "name": "this is irritating ",
+      "dateCreated": "2021-9-25 at 10:05:00 PM",
+      "description": "need to get my carwashed",
+      "completed": false,
+      "dateCompleted": "2021-9-25 at 10:42:32 PM",
+      "id": 1
+    },
+    {
+      "name": "this is irritating ",
+      "dateCreated": "2021-9-25 at 10:44:21 PM",
+      "description": "need to get my carwashed",
+      "completed": false,
+      "dateCompleted": "2021-9-25 at 10:44:35 PM",
+      "id": 2
+    },
+    {
+      "name": "this is irritating ",
+      "dateCreated": "2021-9-25 at 10:48:31 PM",
+      "description": "need to get my carwashed",
+      "complete": false,
+      "dateCompleted": "Not Complete",
+      "id": 3
+    },
+    {
+      "name": "this is irritating ",
+      "dateCreated": "2021-9-25 at 10:48:31 PM",
+      "description": "need to get my carwashed",
+      "complete": false,
+      "dateCompleted": "Not Complete",
+      "id": 4
+    },
+    {
+      "name": "this is irritating ",
+      "dateCreated": "2021-9-25 at 10:48:31 PM",
+      "description": "need to get my carwashed",
+      "completed": false,
+      "dateCompleted": "2021-9-25 at 10:49:05 PM",
+      "id": 5
+    },
+    {
+      "name": "kkkkthis is irritating ",
+      "dateCreated": "2021-9-25 at 10:48:31 PM",
+      "description": "need to get my carwashed",
+      "complete": false,
+      "dateCompleted": "Not Complete",
+      "id": 6
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "paul",
+      "password": "badpassword"
+    },
+    {
+      "username": "Lucas",
+      "password": "bad",
+      "id": 2
+    }
+  ],
+  "themes": [
+    {
+      "id": 1,
+      "name": "Light",
+      "primaryColor": "deepskyblue",
+      "secondaryColor": "coral",
+      "backgroundColor": "powderblue",
+      "textAlign": "center"
+    },
+    {
+      "id": 2,
+      "name": "Dark",
+      "primaryColor": "darkslategray",
+      "secondaryColor": "green",
+      "color": "white",
+      "backgroundColor": "black",
+      "textAlign": "center"
+    }
+  ]
+}
