@@ -9,13 +9,18 @@ export default function TodoList() {
     const {textAlign} = useContext(ThemeContext)
     const{state}= useContext(StateContext)
     const {todos} = state;
+    const {user} = state;
 
    return (
-   	     <div style={{ textAlign: textAlign}}>
-            <h1 style={{ color: primaryColor}}>Todo List</h1>    
+   	     <div style={{paddingTop: '10vh', textAlign: textAlign, minHeight: '100vh'}}>
+            { user.username !== undefined && <h1 style={{ color: primaryColor}}>Todo List</h1>}
+            {user.username === undefined && <h2 style={{paddingTop: '30vh', height: '100vh'}}>Sign in to see your todos.</h2>} 
+            {todos.length === 0 && user.username !== undefined && <h2 style={{paddingTop: '30vh', height: '100vh'}}>No todos found for current user.</h2>} 
+            { todos.length > 0 && user.username!== undefined &&
             <div>        
-              {todos.map((p, i) => <Todo id={i} {...p} key={'Todo-' + i} />)}
+              {todos.map((p, i) => <Todo short={true} id={p._id} {...p} key={'Todo-' + i} />)}
             </div>
+          }
         </div>   
     )
 }

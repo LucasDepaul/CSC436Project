@@ -1,72 +1,137 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import { ThemeContext, StateContext } from '../Context'
 import { useResource } from 'react-request-hook';
+import {Link} from 'react-navi'
+import {Container, Col, Row, Card} from 'react-bootstrap'
 
 
+ function Todo({name, description, dateCreated, completed, dateCompleted, id, author, short=false}) {
+  const {primaryColor, secondaryColor, padding, border, margin, textAlign, color, boxShadow} = useContext(ThemeContext)
+  const {state, dispatch} = useContext(StateContext)  
+  let processedDescription = description
 
-export default function Todo({name, description, dateCreated, completed, dateCompleted, id}) {
-  //const [toggle, setToggle] = useState(completed)
-  const {secondaryColor} = useContext(ThemeContext)
-  const {dispatch} = useContext(StateContext)
-  const {textAlign} = useContext(ThemeContext)
-  const {color} = useContext(ThemeContext)  
-  const [todo, DeleteToDo] = useResource(({name, dateCreated, description, completed, dateCompleted, id}) => ({
-        url:'/todos/'+id,
-        method: 'delete',
-        data: {name, dateCreated, description, completed, dateCompleted, id}
+  
+  if (short) {
+    if (description.length > 30) {
+      processedDescription = description.substring(0, 30) + '...'
+    }
+  }
+  // the signed in users id is needed to check agianst the todos id to make sure that the user is allowed to alter the todo
+  const [checkAuth, getCheck] = useResource(() => ({
+        url:'users/getUser/'+state.user.username,
+        method:'get'
+  })) 
+  // the authors name is required so that we can put a readable name for the author on the todo card
+  const [gname, getName] = useResource(() => ({
+        url:'users/getname/'+author,
+        method:'get'
   }))
-  const [complete, UpdateToDo] = useResource(({completed}) => ({
-         url:'/todos/' + id,
+  useEffect( ()=>{
+    getName()
+  }, [])
+    useEffect( ()=>{
+    getCheck()
+  }, [])
+     var a=''
+   var u=''
+   if (gname.data)
+    a = gname.data.username
+   if (checkAuth.data){
+     console.log("Signed in: " + state.user.username+ " Auth: " + checkAuth.data.at(0)._id)
+    u = checkAuth.data.at(0)._id
+  }
+  const [todo, DeleteToDo] = useResource(({name, dateCreated, description, completed, dateCompleted, id}) => ({
+        url:'/todo/delete/'+id,
+        method: 'delete',
+        headers: {"Authorization": state.user.access_token},
+        data: {author:u, name, dateCreated, description, completed, dateCompleted, id}
+  }))
+
+  const [toggle, UpdateToDo] = useResource(({c, cur}) => ({
+         url:'/todo/toggle/' + id +'/'+c,
          method: 'put',
-         data: {name, dateCreated, description, completed, dateCompleted, id}
+         headers: {"Authorization": state.user.access_token},
+         data: {author: u, completed: c, dateCompleted: cur}
    }))
-  function handleComplete (){
-    console.log("Comlete button hit");
-    var today = new Date(), cur = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate() + ' at ' + today.toLocaleTimeString();
-    completed = !completed;
-    UpdateToDo({name, description, dateCreated, completed, cur, id});
-    completed = !completed;
-    dispatch({type: "COMPLETE_TODO", name, description, dateCreated, completed, cur, id} );
-
+  async function handleComplete (e){
+    console.log(u+" : "+ author)
+    if (u === author){
+      console.log("actual:" + e.target.checked)
+      var today = new Date(), cur = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate() + ' at ' + today.toLocaleTimeString();
+      UpdateToDo({name, description, dateCreated, c: e.target.checked, cur, id});
+      dispatch({type: "COMPLETE_TODO", name, description, dateCreated, completed: !e.target.checked, cur, id} );
+    }
    }
-  function handleRemove() {
+  async function handleRemove() {
+    if (u === author){
     console.log("remove button hit. Attempting to remove todo #" + id);
-    DeleteToDo({name, dateCreated, description, completed, dateCompleted, id});
-    dispatch({type: "DELETE_TODO", name, description, dateCreated, completed, dateCompleted, id} );
+    await DeleteToDo({name, dateCreated, description, completed, dateCompleted, id});
+    await dispatch({type: "DELETE_TODO", id} );
+    }
 
    }
-
-
 	if (completed){
 		return (
-   	     <div style={{color: color}}>
-             <h2 style={{ color: secondaryColor }}>{name}: Todo #{id}</h2>
+      <Container>
+        <Row>
+           <Col></Col>
+           <Col>
+   	    <Card style={{ background: primaryColor, color: color, padding: padding, border: border, margin: margin, boxShadow: boxShadow, width: 'inherit' }}>
+          <Card.Body>
+             <Card.Title><Link href={'/todo/'+id}><h2 style={{color: secondaryColor}}>{name}</h2></Link></Card.Title>
+              <h3>Author: {a} </h3>
+              <div style={{background: secondaryColor, border: border, margin: margin, width: '66vh'}}>{processedDescription}</div>
               <li>Created on: {dateCreated}</li>
               <li>completed on: {dateCompleted}</li>
-              <li>{description}</li>
-                  <form onSubmit={e=>{e.preventDefault(); handleComplete()}}>
-              <li><label for="completed">Complete</label><input type="checkbox" defaultChecked={completed} value={completed} onChange={handleComplete}/></li>
+              <Card.Text>
+              {short && <div>
+              <Link href={'/todo/'+id}>View full todo</Link> 
+              </div>}
+              <form onSubmit={e=>{e.preventDefault(); handleComplete()}}>
+              <li><label for="completed">Complete</label><input type="checkbox" defaultChecked={completed} value={toggle} onChange={handleComplete}/></li>
               </form>
               <form onSubmit={e=>{e.preventDefault(); handleRemove()}}>
                   <li><button type="button onClick={handleRemove()}">Delete Todo</button></li>
               </form>
-        </div>   
+              </Card.Text>
+            </Card.Body>
+        </Card> 
+        </Col>   
+          <Col></Col>
+      </Row>
+    </Container> 
     )}
     else 
-    			return (
-   	     <div style={{color: color}}>
-            <h2 style={{color: secondaryColor}}>{name}: Todo #{id}</h2>
-
-            <li>created on: {dateCreated}</li>
-            <li>{description}</li>
-            <form onSubmit={e=>{ handleComplete()}}>
-               <li><label for="completed">Complete</label><input type="checkbox" defaultChecked={completed} value={completed} onChange={handleComplete}/></li>
-            </form>
-            <form onSubmit={e=>{e.preventDefault(); handleRemove()}}>
-               <li><button type="button onClick={handleRemove()}">Delete Todo</button></li>
-            </form>
-
-        </div>   
+    	return (
+      <Container>
+        <Row>
+           <Col></Col>
+           <Col >
+        <Card style={{background: primaryColor, color: color, padding: padding, border: border, margin: margin, boxShadow: boxShadow, width: 'inherit' }}>
+          <Card.Body>
+             <Card.Title><Link href={'/todo/'+id}><h2 style={{color: secondaryColor}}>{name}</h2></Link></Card.Title>
+              <h3>Author: {a} </h3>
+              <Card.Text>
+               <div style={{background: secondaryColor, border: border, margin: margin, width: '66vh'}}>{processedDescription}</div>
+               <li>created on: {dateCreated}</li>
+                {short && <div>
+                <Link href={'/todo/'+id}>View full todo</Link>
+                </div>}
+              <form onSubmit={e=>{ handleComplete()}}>
+                 <li><label for="completed">Complete</label><input type="checkbox" defaultChecked={completed} value={toggle} onChange={handleComplete}/></li>
+              </form>
+              <form onSubmit={e=>{e.preventDefault(); handleRemove()}}>
+                 <li><button type="button onClick={handleRemove()}">Delete Todo</button></li>
+              </form>
+              </Card.Text>
+            </Card.Body>
+        </Card> 
+        </Col>   
+          <Col></Col>
+      </Row>
+    </Container>  
     )
 
 }
+
+export default React.memo(Todo);
