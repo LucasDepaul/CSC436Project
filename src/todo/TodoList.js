@@ -5,7 +5,7 @@ import { useContext } from 'react/cjs/react.development'
 
 
 export default function TodoList() {
-    const {primaryColor} = useContext(ThemeContext)
+    const {primaryColor, secondaryColor} = useContext(ThemeContext)
     const {textAlign} = useContext(ThemeContext)
     const{state}= useContext(StateContext)
     const {todos} = state;
@@ -14,7 +14,7 @@ export default function TodoList() {
    return (
    	     <div style={{paddingTop: '10vh', textAlign: textAlign, minHeight: '100vh'}}>
             { user.username !== undefined && <h1 style={{ color: primaryColor}}>Todo List</h1>}
-            {user.username === undefined && <h2 style={{paddingTop: '30vh', height: '100vh'}}>Sign in to see your todos.</h2>} 
+            {user.username === undefined && <h2 style={{color: secondaryColor, paddingTop: '30vh', height: '100vh'}}>Sign in to see your todos.</h2>} 
             {todos.length === 0 && user.username !== undefined && <h2 style={{paddingTop: '30vh', height: '100vh'}}>No todos found for current user.</h2>} 
             { todos.length > 0 && user.username!== undefined &&
             <div>        

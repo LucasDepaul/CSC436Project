@@ -36,9 +36,11 @@ import {Container, Col, Row, Card} from 'react-bootstrap'
    var u=''
    if (gname.data)
     a = gname.data.username
-   if (checkAuth.data){
-     console.log("Signed in: " + state.user.username+ " Auth: " + checkAuth.data.at(0)._id)
-    u = checkAuth.data.at(0)._id
+   if (checkAuth.data !== undefined){
+    if (checkAuth.data.at(0) !== undefined){
+      console.log("Signed in: " + state.user.username+ " Auth: " + checkAuth.data.at(0)._id)
+      u = checkAuth.data.at(0)._id
+    }
   }
   const [todo, DeleteToDo] = useResource(({name, dateCreated, description, completed, dateCompleted, id}) => ({
         url:'/todo/delete/'+id,
