@@ -8,7 +8,6 @@ import { PersonCircle } from 'react-bootstrap-icons';
 
 
  function User({username, todos, _id}) {
-  console.log("user rendereed")
   const {primaryColor, secondaryColor, padding, border, margin, textAlign, color, boxShadow} = useContext(ThemeContext)
   const {state, dispatch} = useContext(StateContext)  
   

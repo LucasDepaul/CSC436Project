@@ -25,7 +25,7 @@ export default function TodoPage ({ id }) {
             <div><Link onClick={() => navigation.goBack()}>Back</Link></div>
             <div style={{ textAlign: textAlign}}>
                 {(todo && todo.data)
-                    ? <Todo {...todo.data} />
+                    ? <Todo long={true} {...todo.data} />
                     : 'Loading...'
                 }
                 <hr />

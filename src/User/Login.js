@@ -38,8 +38,8 @@ export default function Login({handleClose, show}) {
         }
         else {
           setLoginFailed(false)
-          console.log(user.data)
-          dispatch({ type: 'LOGIN', username, access_token: user.data.access_token})
+          console.log("Just logged in: "+user.data._id)
+          dispatch({ type: 'LOGIN', id: user.data._id, username, access_token: user.data.access_token})
 
         }
       }

@@ -5,6 +5,7 @@ import TodoList from '../todo/TodoList'
 
 export default function HomePage () {
     const { state, dispatch } = useContext(StateContext)
+    
     const [ todos, gettodos ] = useResource(() => ({
         url: '/todo/',
         method: 'get',

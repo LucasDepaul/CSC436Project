@@ -5,7 +5,7 @@ import Header from '../Header'
 import ChangeTheme from '../ChangeTheme'
 import { ThemeContext, StateContext } from '../Context'
 import {Link} from 'react-navi'
-import {Navbar, Nav, Container} from 'react-bootstrap'
+import {Navbar, Nav, Container, Button} from 'react-bootstrap'
 
 
 
@@ -15,6 +15,9 @@ export default function HeaderBar ({ setTheme}) {
 	const { state } = useContext(StateContext)
 	const { user } = state
 	const [title, setTitle] = useState('Todo list');
+	const [showCreate, setShow] = useState(false);
+	const handleClose = () => setShow(false);;
+	const handleShow = () => setShow(true);;
 	      // use effect to change the page title 
     useEffect(() => {
     	if (user) {
@@ -34,7 +37,14 @@ export default function HeaderBar ({ setTheme}) {
 		        <Navbar.Toggle aria-controls="basic-navbar-nav" />
 		        <Navbar.Collapse id="basic-navbar-nav">
 		          <Nav justify className="me-auto">
-		            {user.username && <Nav.Link><Link href="/todo/create">Create New Post</Link></Nav.Link>}
+				  {(user.username) &&
+		        	<Button variant="link" onClick={(e) => setShow(true)}>
+                        Create New Todo
+                    </Button>
+                  }
+                    <CreateTodo show={showCreate}   handelClose={() => setShow(false)}/>
+                    <CreateTodo/>
+                	
 		            <Nav.Link><Link href='/users'>Users</Link></Nav.Link>
 		            <ChangeTheme theme={theme} setTheme={setTheme} />
 		          </Nav>
