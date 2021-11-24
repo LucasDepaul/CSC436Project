@@ -2,12 +2,12 @@ import React, {useContext, useState, useEffect} from 'react'
 import { ThemeContext, StateContext } from '../Context'
 import { useResource } from 'react-request-hook';
 import {Link, useNavigation} from 'react-navi'
-import {Container, Col, Row, Card, Button} from 'react-bootstrap'
+import {Container, Col, Row, Card, Button, Label} from 'react-bootstrap'
 import { CalendarCheck, Calendar, Clipboard, ClipboardCheck} from 'react-bootstrap-icons'
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 
 
- function Todo({name, description, dateCreated, completed, dateCompleted, id, author, short=false, long=false}) {
+ function Todo({name, description, dateCreated, completed, dateCompleted, id, author, short=false, long=false, td=false}) {
   const {primaryColor, secondaryColor, padding, border, margin, textAlign, color, boxShadow, backgroundColor} = useContext(ThemeContext)
   const {state, dispatch} = useContext(StateContext)  
   let processedDescription = description
@@ -63,6 +63,8 @@ import BootstrapSwitchButton from 'bootstrap-switch-button-react'
     console.log("remove button hit. Attempting to remove todo #" + id);
     await DeleteToDo({name, dateCreated, description, completed, dateCompleted, id});
     await dispatch({type: "DELETE_TODO", id} );
+    if (td)
+      navigation.navigate('/')
     }
 
    }
@@ -119,7 +121,7 @@ import BootstrapSwitchButton from 'bootstrap-switch-button-react'
               </form>
             }
             {(u === author) && 
-              <BootstrapSwitchButton  height={25} width={120} onstyle="primary" offstyle="primary" onlabel="Complete" offlabel="Incomplete" checked={toggle} value={toggle} onChange={(checked: boolean) => {handleComplete(checked) }}/>
+              <><label>Complete?</label><BootstrapSwitchButton  height={25} width="inherit" onstyle="success" offstyle="danger" onlabel="Done" offlabel="X" checked={completed} value={completed} onChange={(checked: boolean) => {handleComplete(checked) }}/></>
             }  
               </Card.Text>
             </Card.Body>

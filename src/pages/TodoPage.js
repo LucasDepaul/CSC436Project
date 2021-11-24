@@ -20,12 +20,13 @@ export default function TodoPage ({ id }) {
     const {textAlign} = useContext(ThemeContext)
     const navigation = useNavigation()
 
+
     return (
         <Container style={{padding: '15vh', minHeight: '100vh'}}>
             <div><Link onClick={() => navigation.goBack()}>Back</Link></div>
             <div style={{ textAlign: textAlign}}>
                 {(todo && todo.data)
-                    ? <Todo long={true} {...todo.data} />
+                    ? <Todo long={true} td={true} id={id} {...todo.data} />
                     : 'Loading...'
                 }
                 <hr />

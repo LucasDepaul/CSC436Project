@@ -33,7 +33,6 @@ function todosReducer (state, action){
         case 'DELETE_TODO':
             console.log("deleting item: "+ action.id);
             const newstate =  state.filter((p) => p._id !== action.id);
-            console.log(newstate)
             return [...newstate];
             state.filter((p) => p.id !== action.id)
         case 'COMPLETE_TODO':

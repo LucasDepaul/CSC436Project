@@ -32,7 +32,7 @@ export default function HeaderBar ({ setTheme}) {
 	return (
 		<>
 	 		<Navbar fixed="top" bg="light" expand="lg">
-     		 <Container style={{width:'100vh'}}>
+     		 <Container>
 		        <Navbar.Brand href="/"><Header text="Home" /></Navbar.Brand>
 		        <Navbar.Toggle aria-controls="basic-navbar-nav" />
 		        <Navbar.Collapse id="basic-navbar-nav">

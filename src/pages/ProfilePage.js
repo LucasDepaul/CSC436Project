@@ -16,7 +16,9 @@ export default function ProfilePage ({username, id }) {
         method: 'get',
         data: {id: id}
     }))
-  useEffect(()=>{
+
+    const { data, isLoading } = todoList;
+    useEffect(()=>{
         gettodos()
     }, [state.user.access_token])
 

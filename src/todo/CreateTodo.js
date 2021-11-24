@@ -18,15 +18,16 @@ export default function CreateTodo ({handelClose, show}) {
     function handleName (evt) {setName(evt.target.value)}
     function handleDescription (evt) {setDescription(evt.target.value)}
     const [ CreateFailed, setCreateFailed ] = useState(false)
-    
-    const [todo, createToDo] = useResource(({name, dateCreated, description, completed, dateCompleted}) => ({
+    console.log("user: " + user.id)
+    const [todo, createToDo] = useResource(({name, dateCreated, description, completed, dateCompleted, author}) => ({
         url:'/todo/',
         method: 'post',
         headers: {"Authorization": state.user.access_token},
-        data: {name, dateCreated, description, completed, dateCompleted}
+        data: {name, dateCreated, description, completed, dateCompleted, author}
     }))
     function handleCreate () {
-        createToDo({name, dateCreated, description, completed, dateCompleted});
+        console.log("user: " + user.id)
+        createToDo({name, dateCreated, description, completed, dateCompleted, author: user.id});
     }
 
     useEffect(() => {
